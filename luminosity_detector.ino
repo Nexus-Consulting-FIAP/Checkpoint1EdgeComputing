@@ -19,6 +19,80 @@ LiquidCrystal  lcd(rs, rw, en, d4, d5, d6, d7);
 //Contadores e Variaveis de Ambiente
 int setupdone = 0;
 
+// Criando caracteres customizados
+byte fullBlock[8] = {  // █
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111,
+  B11111
+};
+byte vazio[8] = { //
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000,
+  B00000
+};
+
+byte halfBlock[8] = {  // Bloco cheio na esquerda
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000,
+  B11000
+};
+byte halfBlock2[8] = {  // Bloco cheio na esquerda
+  B00011,
+  B00011,
+  B00011,
+  B00011,
+  B00011,
+  B00011,
+  B00011,
+  B00011
+};
+
+byte diag[8] = {  // \ (diagonal do "N")
+  B11000,
+  B01100,
+  B01100,
+  B00110,
+  B00110,
+  B00011,
+  B00011,
+  B00001
+};
+byte halfDiagRight[8] = {  // Diagonal com bloco cheio na esquerda
+  B11000,
+  B11100,
+  B11100,
+  B11110,
+  B11110,
+  B11011,
+  B11011,
+  B11001
+};
+byte halfDiagLeft[8] = {  // Diagonal com bloco cheio na direita
+  B11011,
+  B01111,
+  B01111,
+  B00111,
+  B00111,
+  B00011,
+  B00011,
+  B00011
+};
+
 //Função pra facilitar a mudança de cores do led
 void changeColor(char color){
   switch (color){
@@ -91,6 +165,73 @@ void percentageShowRedLuminosity(){
         lcd.print("%");
 }
 
+void drawFrame1() { // Animação -> Encher tela
+  lcd.clear();
+  for (int y = 0; y < 2; y++) {
+    for (int x = 0; x < 16; x++) {
+      lcd.setCursor(x, y);
+      lcd.write((uint8_t)0);
+      delay(30);
+    }
+  }
+}
+
+void drawFrame2() {
+  for (int x = 0; x <= 8; x++) { // Animação -> Desaparecer blocos e formar N
+    if (x < 7) {
+      lcd.setCursor(x, 0); lcd.write((uint8_t)3);
+      lcd.setCursor(x, 1); lcd.write((uint8_t)3);
+      lcd.setCursor(15-x, 0); lcd.write((uint8_t)2);
+      lcd.setCursor(15-x, 1); lcd.write((uint8_t)2);
+      
+      lcd.setCursor(x-1, 0); lcd.write((uint8_t)1);
+      lcd.setCursor(x-1, 1); lcd.write((uint8_t)1);
+      lcd.setCursor(16-x, 0); lcd.write((uint8_t)1);
+      lcd.setCursor(16-x, 1); lcd.write((uint8_t)1);
+    }
+    if (x == 6) {
+      lcd.setCursor(x, 0); lcd.write((uint8_t)3);
+      lcd.setCursor(x, 1); lcd.write((uint8_t)3);
+    }
+    if (x == 7) {
+      lcd.setCursor(x, 0); lcd.write((uint8_t)6);
+      lcd.setCursor(x, 1); lcd.write((uint8_t)3);
+      lcd.setCursor(15-x, 1); lcd.write((uint8_t)5);
+      lcd.setCursor(15-x, 0); lcd.write((uint8_t)2);
+    }
+    if (x == 8) {
+      lcd.setCursor(x, 0); lcd.write((uint8_t)1);
+      lcd.setCursor(x, 1); lcd.write((uint8_t)4);
+      lcd.setCursor(15-x, 1); lcd.write((uint8_t)1);
+      lcd.setCursor(15-x, 0); lcd.write((uint8_t)4);
+    }
+    delay(75);
+  }
+}
+void drawFrame3() { // Animação ->  Apagar com /
+  for (int x = 0; x < 18; x++) {
+    lcd.setCursor(15-x, 0); lcd.write((uint8_t)3);
+    lcd.setCursor(15-x, 1); lcd.write((uint8_t)3);
+    lcd.setCursor(16-x, 0); lcd.write((uint8_t)2);
+    lcd.setCursor(16-x, 1); lcd.write((uint8_t)2);
+    lcd.setCursor(17-x, 0); lcd.write((uint8_t)1);
+    lcd.setCursor(17-x, 1); lcd.write((uint8_t)1);
+    
+    if (x == 6) {
+      lcd.setCursor(15-x, 0); lcd.write((uint8_t)0);
+      lcd.setCursor(15-x, 1); lcd.write((uint8_t)0);
+    }
+    if (x == 7) {
+      lcd.setCursor(15-x, 1); lcd.write((uint8_t)6);
+    }
+    if (x == 8) {
+      lcd.setCursor(15-x, 0); lcd.write((uint8_t)6);
+    }
+    delay(25);
+  }
+}
+
+
 void setup()
 {
   	//Inicializa a comunicação serial a.k.a console
@@ -110,10 +251,21 @@ void setup()
     //Define X e Y disponiveis no LCD
     lcd.begin(16, 2);
 	
-  	//TODO-> LOGO (Animação)
-    lcd.print("Agnello xD");
-  	delay(5000);
-    //lcd.setCursor(0,1); X e Y, sendo y = 0 primeira linha e y = 1 segunda
+  	//LOGO (Animação)
+      lcd.begin(16, 2);
+  
+      lcd.createChar(0, fullBlock);
+      lcd.createChar(1, vazio);
+      lcd.createChar(2, halfBlock);
+      lcd.createChar(3, halfBlock2);
+      lcd.createChar(4, diag);
+      lcd.createChar(5, halfDiagRight);
+      lcd.createChar(6, halfDiagLeft);
+
+      drawFrame1(); delay(500);
+      drawFrame2(); delay(500);
+      drawFrame3(); delay(500);
+      delay(1500);
   	
   	//Aviso para definir a luminosidade do ambiente
   	lcd.clear();
