@@ -38,6 +38,8 @@
 <br>
 
 <a href="https://www.tinkercad.com/things/iyVf2ghUNdK-checkpoint-1-luminosidade-v3?sharecode=ropxFYCk9jbk4PjHbZS1v8b2ajrwrSzUlY7NPBjDDdA">Aperte aqui para ir até a simulação do Tinkercad!</a>
+<br>
+<a href="https://www.youtube.com/watch?v=QuvtC4mlm0Q">Aperte aqui para ir até o vídeo explicativo do projeto!</a>
 
 <h2>Componentes e Circuitos</h2>
 
