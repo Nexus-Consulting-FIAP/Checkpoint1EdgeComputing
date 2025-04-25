@@ -241,12 +241,12 @@ void setup()
     pinMode(buzzer, OUTPUT);
 
     //leds
-    pinMode(red, OUTPUT);
+    pinMode(red, OUTPUT); OUTPUT MANDA ENERGIA -> Arduino, manda energia pro LED pra ele liga
     pinMode(yellow, OUTPUT);
     pinMode(green, OUTPUT);
   
   	//botão
-	pinMode(button, INPUT); 
+	pinMode(button, INPUT);  INPUT TE AVISA SOBRE ENERGIA-> Arduino, se o botão corta a energia, me avisa
 
     //Define X e Y disponiveis no LCD
     lcd.begin(16, 2);
@@ -293,8 +293,8 @@ void loop()
         	}
         }
     }else{
-   		percentageShowRedLuminosity();
-        percentageShowActualLuminosity(1, photoresistorValue);
-        detectingLuminosity();
+   		percentageShowRedLuminosity(); //Mostra qual valor evitar, no caso, o RED
+        percentageShowActualLuminosity(1, photoresistorValue); //Mostra a luz no LCD
+        detectingLuminosity(); //Faz o fotorresistor funcionar, no caso, ver qual valor
     }
 }
