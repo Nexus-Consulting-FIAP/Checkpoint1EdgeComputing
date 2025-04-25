@@ -118,7 +118,7 @@ void changeColor(char color){
 
 //Função que define o valor de brilho do ambiente
 void defineValues(int analogValue){
-  	mediumValue = (map(analogValue, 0, 1023, 0, 100))*0.9;
+  	mediumValue = (map(analogValue, 0, 1023, 0, 100))*0.9; //Map = Regra de três que eu usei pra fazer de 1 a 100%
 	lowValue = mediumValue/2;
 }
 
