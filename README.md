@@ -1,5 +1,5 @@
 
-<h1>Detector de luminosidade - Nexus Group</h1>
+##Detector de luminosidade - Nexus Group
 <p>Turma: 1ESPG</p>
 
 **Integrantes**
