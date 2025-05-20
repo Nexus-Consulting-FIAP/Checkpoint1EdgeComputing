@@ -1,5 +1,5 @@
 
-##Detector de luminosidade - Nexus Group
+## Detector de luminosidade - Nexus Group
 <p>Turma: 1ESPG</p>
 
 **Integrantes**
